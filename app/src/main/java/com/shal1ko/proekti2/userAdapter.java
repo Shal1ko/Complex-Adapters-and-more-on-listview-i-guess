@@ -39,18 +39,15 @@ public class userAdapter extends BaseAdapter{
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.layout,parent,false);
-
-            User currUser = (User)getItem(position);
-
-            TextView name = (TextView)convertView.findViewById(R.id.name);
-            TextView age = (TextView)convertView.findViewById(R.id.age);
-            name.setText(currUser.getName().toString());
-            age.setText(String.valueOf(currUser.getAge()));
-
-            return convertView;
         }
-        else {
-            return convertView;
-        }
+        User currUser = (User)getItem(position);
+
+        TextView name = (TextView)convertView.findViewById(R.id.name);
+        TextView age = (TextView)convertView.findViewById(R.id.age);
+        name.setText(currUser.getName().toString());
+        age.setText(String.valueOf(currUser.getAge()));
+
+        return convertView;
+
     }
 }

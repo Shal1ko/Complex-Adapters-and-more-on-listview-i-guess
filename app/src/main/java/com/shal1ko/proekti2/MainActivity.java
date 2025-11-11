@@ -4,10 +4,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
     Button button1;
     ListView list1;
+    List<User> list= new ArrayList<>();
     LinearLayout layout1;
 
     @Override
@@ -51,18 +54,30 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        });
 
+        userAdapter adapter = new userAdapter(getApplicationContext(),list);
+        list1.setAdapter(adapter);
+
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                List<User> list= new ArrayList<>();
-
                 list.add(new User("გიორგი",44));
                 list.add(new User("Benjamin",41));
                 list.add(new User("Tomas",64));
 
-                userAdapter adapter = new userAdapter(getApplicationContext(),list);
-                list1.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
 
+            }
+        });
+
+        list1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(MainActivity.this, list.get(position).getName(), Toast.LENGTH_SHORT).show();
+                list.remove(position);
+
+                if (adapter != null) {
+                    adapter.notifyDataSetChanged();
+                }
             }
         });
 
